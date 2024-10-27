@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wyattfry-com
+  namespace: {{ .Release.Namespace }}
+data:
+{{- range $path, $file := .Files.Glob "public/*" }}
+  {{ $filename := base $path }}
+  {{ $filename }}: |
+{{ $file | toString | indent 4 }}
+{{- end }}
